@@ -1,6 +1,8 @@
 package com.example.fabrikatepla
 
+import android.annotation.SuppressLint
 import android.view.Window
+import androidx.activity.viewModels
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -33,18 +35,24 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.view.WindowCompat
+import com.example.fabrikatepla.ui.theme.otpCode
 
 @Composable
-fun EnteringCode(window: Window, onVerifyClick:(String)->Unit) {
+fun EnteringCode(
+    window: Window,
+    codeViewModel: CodeViewModel,
+    onVerifyClick: (String) -> Unit,
+) {
 
     val codeTxtFieldTxt = remember { mutableStateOf("") }
     val textFieldRequester = remember { FocusRequester() }
-    WindowCompat.setDecorFitsSystemWindows(window,false)
+    WindowCompat.setDecorFitsSystemWindows(window, false)
 
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .imePadding()
+            .imePadding(),
+        verticalArrangement = Arrangement.Center
     ) {
         Spacer(Modifier.height(8.dp))
         Column(
@@ -61,9 +69,9 @@ fun EnteringCode(window: Window, onVerifyClick:(String)->Unit) {
 
             Text(
                 modifier = Modifier.fillMaxWidth(),
-                text = "Введите новый код",
+                text = if (codeViewModel.stateCode.value) "Неверный код" else "Введите код",
                 fontFamily = FontFamily.SansSerif,
-                color = Color.Black,
+                color = if (codeViewModel.stateCode.value) Color.Red else Color.Black,
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Medium,
                 textAlign = TextAlign.Center
@@ -79,8 +87,8 @@ fun EnteringCode(window: Window, onVerifyClick:(String)->Unit) {
                 }
             }
 
-//            Spacer(Modifier.height(12.dp))
-
+            Spacer(Modifier.height(12.dp))
+            BottomText()
 
             TextField(
                 value = codeTxtFieldTxt.value,
@@ -108,34 +116,49 @@ fun EnteringCode(window: Window, onVerifyClick:(String)->Unit) {
             )
             BottomActionButtons { onVerifyClick(codeTxtFieldTxt.value) }
         }
-
     }
 }
 
+@SuppressLint("UnrememberedMutableInteractionSource")
 @Composable
 private fun BottomText() {
-    buildAnnotatedString {
+    val bottomText = buildAnnotatedString {
         append("Не получил код? ")
         this.addStyle(
             SpanStyle(color = Color.LightGray, fontFamily = FontFamily.SansSerif),
             0,
-            17
+            15
         )
         append("Повторная отправка кода")
         this.addStyle(
             SpanStyle(color = Color.Blue, fontFamily = FontFamily.SansSerif),
-            18,
-            28
+            15,
+            39
         )
     }
+
+    val context = LocalContext.current
+    Text(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable(
+                interactionSource = MutableInteractionSource(),
+                indication = null
+            ) {
+                otpCode.generateNewCode()
+                OtpCodesNoti(context).showNotification(otpCode.code!!.toInt())
+            },
+        text = bottomText,
+        textAlign = TextAlign.Center,
+    )
 }
 
+@SuppressLint("UnrememberedMutableInteractionSource")
 @Composable
 fun NumberBox(
     codeText: MutableState<String>,
     onOtpFieldClick: () -> Unit,
 ) {
-
     Row(
         horizontalArrangement = Arrangement.SpaceEvenly,
         modifier = Modifier
@@ -166,7 +189,9 @@ fun NumberBox(
 }
 
 @Composable
-private fun TextFieldBox(text: String) {
+private fun TextFieldBox(
+    text: String
+) {
 
     Box(
         modifier = Modifier
@@ -185,10 +210,10 @@ private fun TextFieldBox(text: String) {
     }
 }
 
-
 @Composable
-private fun ColumnScope.BottomActionButtons(onVerifyClick: () -> Unit){
-
+private fun ColumnScope.BottomActionButtons(
+    onVerifyClick: () -> Unit
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -203,13 +228,13 @@ private fun ColumnScope.BottomActionButtons(onVerifyClick: () -> Unit){
             onClick = { },
             colors = ButtonDefaults.buttonColors(
                 backgroundColor = Color.Transparent,
-                contentColor = Color(0xFF9300FC),
+                contentColor = Color(0xFFFA6C37),
                 disabledBackgroundColor = Color(0x009300FC)
             ),
             enabled = true,
             modifier = Modifier
                 .weight(1f)
-                .border(2.5.dp, Color(0xFF9500FF), shape = RoundedCornerShape(100.dp)),
+                .border(2.5.dp, Color(0xFFFA6C37), shape = RoundedCornerShape(100.dp)),
             shape = RoundedCornerShape(100.dp),
             elevation = ButtonDefaults.elevation(
                 defaultElevation = 0.dp,
@@ -219,11 +244,11 @@ private fun ColumnScope.BottomActionButtons(onVerifyClick: () -> Unit){
             Icon(
                 modifier = Modifier.padding(start = 8.dp),
                 imageVector = Icons.Default.KeyboardArrowLeft,
-                contentDescription = "Cancel ?"
+                contentDescription = "Выйти ?"
             )
             Spacer(Modifier.width(6.dp))
             androidx.compose.material.Text(
-                "Cancel",
+                "Выйти",
                 fontSize = 16.sp,
                 modifier = Modifier.padding(end = 6.dp, top = 6.dp, bottom = 6.dp)
             )
@@ -237,9 +262,9 @@ private fun ColumnScope.BottomActionButtons(onVerifyClick: () -> Unit){
                 onVerifyClick()
             },
             colors = ButtonDefaults.buttonColors(
-                backgroundColor = Color(0xFF9500FF),
+                backgroundColor = Color(0xFFFA6C37),
                 contentColor = Color.White,
-                disabledBackgroundColor = Color(0x7A9300FC)
+                disabledBackgroundColor = Color(0xFFFA6C37)
             ),
             enabled = true,
             shape = RoundedCornerShape(100.dp),
@@ -248,15 +273,10 @@ private fun ColumnScope.BottomActionButtons(onVerifyClick: () -> Unit){
             ) {
 
             androidx.compose.material.Text(
-                "Verify",
+                "Подтвердить",
                 fontSize = 16.sp,
                 modifier = Modifier.padding(start = 8.dp, top = 8.dp, bottom = 8.dp)
             )
-
         }
-
-
     }
-
-
 }
