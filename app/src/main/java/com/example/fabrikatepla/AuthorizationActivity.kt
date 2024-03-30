@@ -10,7 +10,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.annotation.RequiresApi
+import androidx.activity.viewModels
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -36,59 +36,16 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.fabrikatepla.domain.PermissionSMS
 import com.example.fabrikatepla.presentation.ui.MainActivity
+import com.example.fabrikatepla.presentation.ui.home.MainViewModel
 import com.example.fabrikatepla.ui.theme.otpCode
 
-//class MainActivity : ComponentActivity() {
-//
-//    private val permissionLauncher = registerForActivityResult(
-//        ActivityResultContracts.RequestPermission()
-//    ) { isGranted ->
-//        hasNotificationPermission = isGranted
-//    }
-//
-//    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//        WindowCompat.setDecorFitsSystemWindows(window,false)
-//        setContent {
-//
-//            val context = LocalContext.current
-//            var hasNotificationPermission by remember {
-//                mutableStateOf(
-//                    ContextCompat.checkSelfPermission(
-//                        context,
-//                        Manifest.permission.POST_NOTIFICATIONS
-//                    ) == PackageManager.PERMISSION_GRANTED
-//                )
-//            }
-//
-//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU){
-//                permissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
-//            }
-//
-//            window.statusBarColor = Color(0xFF350099).toArgb()
-//            val showSuccessDialog = remember { mutableStateOf(false) }
-//            val isVerificationSuccess = remember{ mutableStateOf(false) }
-//
-//            Box(modifier = Modifier.fillMaxSize()) {
-//
-//                OtpTextFieldScreen( window, onVerifyClick = { codeTxt->
-//                    isVerificationSuccess.value = otpCode.code == codeTxt
-//                    showSuccessDialog.value = true
-//                })
-//
-//                if(showSuccessDialog.value){
-////                    if (hasNotificationPermission){
-//                        SuccessLoginDialog(isSuccess = isVerificationSuccess as State<Boolean>, showSuccessDialog)
-////                    }
-//                }
-//            }
-//        }
-//    }
-//}
-
 class AuthorizationActivity : ComponentActivity() {
+
+    private val codeViewModel by viewModels<CodeViewModel>()
 
     @SuppressLint("NewApi")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -96,48 +53,25 @@ class AuthorizationActivity : ComponentActivity() {
         WindowCompat.setDecorFitsSystemWindows(window, false)
         setContent {
 
-            val context = LocalContext.current
-            var hasNotificationPermission by remember {
-                mutableStateOf(
-                    ContextCompat.checkSelfPermission(
-                        context,
-                        Manifest.permission.POST_NOTIFICATIONS
-                    ) == PackageManager.PERMISSION_GRANTED
-                )
-            }
+            PermissionSMS()
 
-            val permissionLauncher = rememberLauncherForActivityResult(
-                contract = ActivityResultContracts.RequestPermission()
-            ) { isGranted ->
-                hasNotificationPermission = isGranted
-            }
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                LaunchedEffect(Unit) {
-                    permissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
-                }
-            }
-
-            window.statusBarColor = Color(0xFF350099).toArgb()
+            window.statusBarColor = Color(0xFFFA6C37).toArgb()
             val showSuccessDialog = remember { mutableStateOf(false) }
             val isVerificationSuccess = remember { mutableStateOf(false) }
 
             Box(modifier = Modifier.fillMaxSize()) {
 
-                EnteringCode (window, onVerifyClick = { codeTxt ->
+                EnteringCode(window,
+                    codeViewModel = codeViewModel,
+                    onVerifyClick = { codeTxt ->
                     isVerificationSuccess.value = otpCode.code == codeTxt
                     showSuccessDialog.value = true
                 })
 
-                if (showSuccessDialog.value) {
-                    SuccessLoginDialog(
-                        isSuccess = isVerificationSuccess as State<Boolean>,
-                        showSuccessDialog
-                    )
-                }
+                codeViewModel.stateCode.value = showSuccessDialog.value
             }
 
-            if (isVerificationSuccess.value){
+            if (isVerificationSuccess.value) {
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
             }
@@ -146,9 +80,10 @@ class AuthorizationActivity : ComponentActivity() {
 }
 
 @Composable
-fun SuccessLoginDialog(isSuccess: State<Boolean>, showDialog: MutableState<Boolean>) {
-
-
+fun SuccessLoginDialog(
+    isSuccess: State<Boolean>,
+    showDialog: MutableState<Boolean>
+) {
 
     Dialog(
         onDismissRequest = {
@@ -162,24 +97,21 @@ fun SuccessLoginDialog(isSuccess: State<Boolean>, showDialog: MutableState<Boole
             shape = RoundedCornerShape(12.dp)
         ) {
             Box(Modifier.fillMaxSize()) {
-
                 Column(
                     modifier = Modifier.fillMaxSize(),
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center
                 ) {
-
                     Image(
                         imageVector = Icons.Default.CheckCircle,
-                        contentDescription = if (isSuccess.value) "Verification Successfull :)" else "Wrog OTP :(",
+                        contentDescription = if (isSuccess.value) "Успешно" else "Код не подходит",
                         modifier = Modifier.width(120.dp),
                         colorFilter = ColorFilter.tint(if (isSuccess.value) Color.Green else Color.Red),
                         contentScale = ContentScale.Crop
                     )
-
                     Spacer(Modifier.height(10.dp))
                     Text(
-                        text = if (isSuccess.value) "Verification Successfull :)" else "Wrog OTP :(",
+                        text = if (isSuccess.value) "Успешно" else "Код не подходит",
                         fontSize = 18.sp,
                         fontFamily = SansSerif,
                         fontWeight = FontWeight.Bold
@@ -201,7 +133,7 @@ fun SuccessLoginDialog(isSuccess: State<Boolean>, showDialog: MutableState<Boole
                         )
                     ) {
                         Text(
-                            text = if (isSuccess.value) "DONE" else "RSEND CODE",
+                            text = if (isSuccess.value) "Перейти" else "Повторный код",
                             color = Color.White,
                             fontSize = 16.sp,
                             fontWeight = FontWeight.Bold,
@@ -215,7 +147,6 @@ fun SuccessLoginDialog(isSuccess: State<Boolean>, showDialog: MutableState<Boole
                         .fillMaxSize()
                         .padding(12.dp), contentAlignment = Alignment.TopEnd
                 ) {
-
                     Icon(
                         imageVector = Icons.Default.Close,
                         contentDescription = "Close",
