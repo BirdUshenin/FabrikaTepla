@@ -111,15 +111,16 @@ fun OtpTextFieldScreen(window:Window, onVerifyClick:(String)->Unit) {
 
                     OtpTextField(codeText = codeTxtFieldTxt) {
                         focusManager.clearFocus()
-                        textFieldRequester.requestFocus()
+
+                        if(textFieldRequester.requestFocus().equals(true)){
+                            keyboardController?.show()
+                        }
                     }
 
                     Spacer(Modifier.height(12.dp))
                     BottomText()
 
                 }
-
-
             }
 
             BottomActionButtons { onVerifyClick(codeTxtFieldTxt.value) }
@@ -128,8 +129,6 @@ fun OtpTextFieldScreen(window:Window, onVerifyClick:(String)->Unit) {
         }
 
     }
-
-
 
 }
 
@@ -236,7 +235,7 @@ private fun BottomText(){
                 indication = null
             ) {
                 otpCode.generateNewCode()
-                OtpCodesNotificationService(context).showNotification(otpCode.code!!.toInt())
+                OtpCodesNoti(context).showNotification(otpCode.code!!.toInt())
             }
             .fillMaxWidth()
     )
@@ -333,3 +332,7 @@ private fun OtpTextFieldBox(text:String) {
     }
 
 }
+
+
+
+

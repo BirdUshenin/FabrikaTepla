@@ -18,7 +18,7 @@ class OtpApp : Application() {
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
 
             val channel = NotificationChannel(
-                OtpCodesNotificationService.OTP_CODES_CHANNEL_ID,
+                OtpCodesNoti.OTP_CODES_CHANNEL_ID,
                 "OTP codes",
                 NotificationManager.IMPORTANCE_HIGH
             )
