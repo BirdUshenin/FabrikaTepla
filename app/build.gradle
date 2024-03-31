@@ -80,4 +80,6 @@ dependencies {
     // for ViewModel
     implementation("androidx.compose.runtime:runtime-livedata:1.6.3")
 
+    implementation(project(":validation"))
+
 }

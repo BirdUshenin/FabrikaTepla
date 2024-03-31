@@ -5,7 +5,7 @@ import android.content.*
 import android.widget.Toast
 import com.example.fabrikatepla.ui.theme.otpCode
 
-class OtpNotificationReceiver: BroadcastReceiver() {
+class EnteringNotificationReceiver: BroadcastReceiver() {
 
     override fun onReceive(context: Context?, intent: Intent?) {
 

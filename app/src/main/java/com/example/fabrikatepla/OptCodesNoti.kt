@@ -1,6 +1,5 @@
 package com.example.fabrikatepla
 
-import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.app.Service
@@ -9,17 +8,18 @@ import android.content.Intent
 import android.os.Build
 import androidx.core.app.NotificationCompat
 
-class OtpCodesNoti(private val context: Context) {
+class EnteringCodesNotify(private val context: Context) {
 
-    private val notificationmanager = context.getSystemService(Service.NOTIFICATION_SERVICE) as NotificationManager
+    private val notificationManager =
+        context.getSystemService(Service.NOTIFICATION_SERVICE) as NotificationManager
 
-    fun showNotification(code:Int){
+    fun showNotification(code: Int) {
 
         val copyIntent = PendingIntent.getBroadcast(
             context,
             1,
-            Intent(context, OtpNotificationReceiver::class.java),
-            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) PendingIntent.FLAG_IMMUTABLE else 0
+            Intent(context, EnteringNotificationReceiver::class.java),
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) PendingIntent.FLAG_IMMUTABLE else 0
         )
 
         val notification = NotificationCompat.Builder(context, OTP_CODES_CHANNEL_ID)
@@ -34,11 +34,11 @@ class OtpCodesNoti(private val context: Context) {
             .setOngoing(false)
             .build()
 
-        notificationmanager.notify(1,  notification)
+        notificationManager.notify(1, notification)
 
     }
 
-    companion object{
+    companion object {
         const val OTP_CODES_CHANNEL_ID = "verification_codes_channel"
     }
 

@@ -8,7 +8,7 @@
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <application
-        android:name="com.example.fabrikatepla.OtpApp"
+        android:name="com.example.fabrikatepla.HeatFactoryApp"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -33,7 +33,7 @@
         <activity android:name=".presentation.ui.MainActivity"
             android:exported="true">
         </activity>
-        <receiver android:name="com.example.fabrikatepla.OtpNotificationReceiver" />
+        <receiver android:name="com.example.fabrikatepla.EnteringNotificationReceiver" />
     </application>
 
 </manifest>

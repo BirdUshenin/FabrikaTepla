@@ -146,7 +146,7 @@ private fun BottomText() {
                 indication = null
             ) {
                 otpCode.generateNewCode()
-                OtpCodesNoti(context).showNotification(otpCode.code!!.toInt())
+                EnteringCodesNotify(context).showNotification(otpCode.code!!.toInt())
             },
         text = bottomText,
         textAlign = TextAlign.Center,

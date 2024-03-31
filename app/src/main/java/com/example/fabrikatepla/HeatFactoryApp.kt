@@ -6,25 +6,26 @@ import android.app.NotificationManager
 import android.content.Context
 import android.os.Build
 
-class OtpApp : Application() {
+class HeatFactoryApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
         createNotificationChannel()
     }
 
-    private fun createNotificationChannel(){
+    private fun createNotificationChannel() {
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 
             val channel = NotificationChannel(
-                OtpCodesNoti.OTP_CODES_CHANNEL_ID,
+                EnteringCodesNotify.OTP_CODES_CHANNEL_ID,
                 "OTP codes",
                 NotificationManager.IMPORTANCE_HIGH
             )
 
             channel.description = "Used to receieve simulated OTP codes"
-            val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            val notificationManager =
+                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.createNotificationChannel(channel)
 
         }
