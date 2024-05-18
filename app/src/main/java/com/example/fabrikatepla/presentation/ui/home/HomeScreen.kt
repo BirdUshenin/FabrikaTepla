@@ -1,5 +1,7 @@
 package com.example.fabrikatepla.presentation.ui.home
 
+import CatalogGridHotKeysRender
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
@@ -25,5 +27,15 @@ fun HomeScreen(
     val rememberStateScroll = rememberLazyListState()
 
     CategoryScreen(selectedItem, navigateBack, state, paddingValues, rememberStateScroll, categoryViewModel)
-
+//    Column {
+//        CatalogGridHotKeysRender(listHotkeys = getCatalogGridHotKeys().catalogTab!!,
+//            clickHotKey = { name, link -> })
+//        CatalogGridRecommendationRender(getCatalogGridRecommendation().catalogCarousel!!,
+//            onClickItem = {headCategory, categoryId -> })
+//
+//        CatalogGridRootSectionsRender(
+//            getCatalogGridSections().catalogCarousel!!,
+//            onClickItem = { item -> },
+//            onClickShowAllInSection = { id, name -> })
+//    }
 }

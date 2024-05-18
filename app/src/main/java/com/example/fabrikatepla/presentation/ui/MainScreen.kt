@@ -53,29 +53,29 @@ fun MainScreen(
         snackbarHost = {
             SnackbarHost(hostState = snackBarHostState)
         },
-        floatingActionButton = {
-            if (fabIsVisible.value) {
-                FloatingActionButton(
-                    onClick = {
-                        scope.launch {
-                            val snackAction = snackBarHostState.showSnackbar(
-                                message = "Перейти в корзину",
-                                actionLabel = "Скрыть окно",
-                                duration = SnackbarDuration.Long
-                            )
-                            if (snackAction == SnackbarResult.ActionPerformed) {
-                                fabIsVisible.value = false
-                            }
-                        }
-                    }
-                ) {
-                    Icon(
-                        Icons.Filled.ShoppingCart,
-                        contentDescription = null
-                    )
-                }
-            }
-        },
+//        floatingActionButton = {
+//            if (fabIsVisible.value) {
+//                FloatingActionButton(
+//                    onClick = {
+//                        scope.launch {
+//                            val snackAction = snackBarHostState.showSnackbar(
+//                                message = "Перейти в корзину",
+//                                actionLabel = "Скрыть окно",
+//                                duration = SnackbarDuration.Long
+//                            )
+//                            if (snackAction == SnackbarResult.ActionPerformed) {
+//                                fabIsVisible.value = false
+//                            }
+//                        }
+//                    }
+//                ) {
+//                    Icon(
+//                        Icons.Filled.ShoppingCart,
+//                        contentDescription = null
+//                    )
+//                }
+//            }
+//        },
         bottomBar = {
             NavigationBar {
                 val navBackStackEntry by navHostController.currentBackStackEntryAsState()

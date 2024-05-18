@@ -1,5 +1,6 @@
 package com.example.fabrikatepla.presentation.ui.home.CategoryItem
 
+import CatalogGridHotKeysRender
 import android.annotation.SuppressLint
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -44,12 +45,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import com.example.fabrikatepla.R
 import com.example.fabrikatepla.data.CategoryItem
 import com.example.fabrikatepla.data.Item
+import com.example.fabrikatepla.presentation.ui.home.CatalogGridRecommendationRender
+import com.example.fabrikatepla.presentation.ui.home.CatalogGridRootSectionsRender
 import com.example.fabrikatepla.presentation.ui.home.HomeScreenState
+import com.example.fabrikatepla.presentation.ui.home.getCatalogGridRecommendation
+import com.example.fabrikatepla.presentation.ui.home.getCatalogGridSections
+import getCatalogGridHotKeys
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
@@ -111,53 +116,84 @@ fun CategoryScreen(
                                     )
                                 }
                             },
-                            actions = {
-                                IconButton(onClick = { /* doSomething() */ }) {
-                                    Icon(
-                                        imageVector = Icons.Filled.Favorite,
-                                        contentDescription = "Localized description"
-                                    )
-                                }
-                            }
+//                            actions = {
+//                                IconButton(onClick = { /* doSomething() */ }) {
+//                                    Icon(
+//                                        imageVector = Icons.Filled.Favorite,
+//                                        contentDescription = "Localized description"
+//                                    )
+//                                }
+//                            }
                         )
                     },
                 ) {
-
                     LazyColumn(
                         state = rememberStateScroll,
                         modifier = Modifier.padding(paddingValues),
                         contentPadding = it
-                    ) {
+                    ){
                         item {
-                            Text(
-                                text = "Категории",
-                                modifier = Modifier.fillMaxWidth().padding(top = 20.dp, bottom = 15.dp),
-                                textAlign = TextAlign.Center,
-                                fontSize = 24.sp
-                            )
-                        }
-                        state.list.forEach { item ->
-                            item {
-                                Commodity(
-                                    item = item,
+                            Column (
+                                modifier = Modifier.padding(top = 10.dp)
+                            ){
+                                CatalogGridHotKeysRender(
+                                    listHotkeys = getCatalogGridHotKeys().catalogTab
+                                    ,
+                                    state = state,
                                     onItemClick = {
                                         selectedItem.value = it
                                         viewModel.updateId(it.id)
                                     }
                                 )
+                                CatalogGridRecommendationRender(
+                                    getCatalogGridRecommendation().catalogCarousel,
+                                    onClickItem = {headCategory, categoryId -> }
+                                )
+                                CatalogGridRootSectionsRender(
+                                    getCatalogGridSections().catalogCarousel,
+                                    onClickItem = { item -> },
+                                    onClickShowAllInSection = { id, name -> }
+                                )
                             }
                         }
-                        item {
-                            Text(
-                                text = "Горячие скидки",
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(top = 50.dp),
-                                textAlign = TextAlign.Center,
-                                fontSize = 24.sp
-                            )
-                        }
                     }
+
+
+//                    LazyColumn(
+//                        state = rememberStateScroll,
+//                        modifier = Modifier.padding(paddingValues),
+//                        contentPadding = it
+//                    ) {
+//                        item {
+//                            Text(
+//                                text = "Категории",
+//                                modifier = Modifier.fillMaxWidth().padding(top = 20.dp, bottom = 15.dp),
+//                                textAlign = TextAlign.Center,
+//                                fontSize = 24.sp
+//                            )
+//                        }
+//                        state.list.forEach { item ->
+//                            item {
+//                                Commodity(
+//                                    item = item,
+//                                    onItemClick = {
+//                                        selectedItem.value = it
+//                                        viewModel.updateId(it.id)
+//                                    }
+//                                )
+//                            }
+//                        }
+//                        item {
+//                            Text(
+//                                text = "Горячие скидки",
+//                                modifier = Modifier
+//                                    .fillMaxWidth()
+//                                    .padding(top = 50.dp),
+//                                textAlign = TextAlign.Center,
+//                                fontSize = 24.sp
+//                            )
+//                        }
+//                    }
                 }
             }
         }

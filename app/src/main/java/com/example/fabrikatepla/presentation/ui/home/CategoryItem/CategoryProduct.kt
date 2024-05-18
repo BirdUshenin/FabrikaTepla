@@ -2,14 +2,25 @@ package com.example.fabrikatepla.presentation.ui.home.CategoryItem
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material3.Card
@@ -32,13 +43,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.example.fabrikatepla.R
 import com.example.fabrikatepla.data.CategoryItem
 import com.example.fabrikatepla.data.Item
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
 fun CategoryProduct(
     item: Item,
@@ -79,29 +91,89 @@ fun CategoryProduct(
                             )
                         }
                     },
-                    actions = {
-                        IconButton(onClick = { /* doSomething() */ }) {
-                            Icon(
-                                imageVector = Icons.Filled.Favorite,
-                                contentDescription = "Localized description"
-                            )
-                        }
-                    }
                 )
             }
         ) {
-            LazyColumn(
-                contentPadding = it,
-                modifier = Modifier.padding(paddingValues)
-            ) {
-                state.list.forEach { item ->
-                    item {
-                        CategoryProductList(
-                            item = item,
-                            onItemClick = { selectedItem.value = it }
-                        )
+            Column (
+                modifier = Modifier
+                    .padding(top = 15.dp)
+                    .background(Color.LightGray)
+            ){
+                LazyVerticalGrid(
+                    columns = GridCells.Fixed(2),
+                    contentPadding = it,
+                    modifier = Modifier.padding(paddingValues)
+                ) {
+                    state.list.forEach { item ->
+                        item {
+                            CategoryProductList(
+                                item = item,
+                                onItemClick = { selectedItem.value = it }
+                            )
+                        }
                     }
                 }
+
+
+//                LazyColumn(
+//                    modifier = Modifier.padding(paddingValues),
+//                    contentPadding = it,
+//                ) {
+//                    val chunkedItems = state.list.chunked(2)
+//                    chunkedItems.forEach { chunk ->
+//                        item {
+//                            Row(Modifier.fillMaxWidth()) {
+//                                chunk.forEach { item ->
+//                                    Column(Modifier.weight(1f)) {
+//                                        CategoryProductList(
+//                                            item = item,
+//                                            onItemClick = { selectedItem.value = it }
+//                                        )
+//                                    }
+//                                }
+//                            }
+//                        }
+//                    }
+//                }
+
+//                LazyColumn(
+//                    contentPadding = it,
+//                ) {
+//                    val chunkedItems = state.list.chunked(2)
+//                    chunkedItems.forEach { chunk ->
+//                        item {
+//                            FlowRow(Modifier.fillMaxWidth()) {
+//                                chunk.forEach { item ->
+//                                    Column(Modifier.weight(1f)) {
+//                                        CategoryProductList(
+//                                            item = item,
+//                                            onItemClick = { selectedItem.value = it }
+//                                        )
+//                                    }
+//                                }
+//                            }
+//                        }
+//                    }
+//                }
+
+//                LazyVerticalGrid(
+//                    columns = GridCells.Fixed(2),
+//                    contentPadding = it,
+//                    modifier = Modifier.padding(paddingValues),
+//                    verticalArrangement = Arrangement.spacedBy(8.dp), // Расстояние между строками
+//                    horizontalArrangement = Arrangement.SpaceBetween // Выравнивание элементов по ширине
+//                ) {
+//                    state.list.forEach { item ->
+//                        item {
+//                            CategoryProductList(
+//                                item = item,
+//                                onItemClick = { selectedItem.value = it }
+//                            )
+//                        }
+//                    }
+//                }
+
+
             }
         }
         BackHandler {
@@ -110,28 +182,65 @@ fun CategoryProduct(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CategoryProductList(
     item: CategoryItem,
     onItemClick: (CategoryItem) -> Unit
 ) {
-    Card(
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.background),
-        onClick = { onItemClick(item) }
-    ) {
-        Box(Modifier.padding(15.dp)) {
-            Text(text = item.name)
+    Box(
+        modifier = Modifier
+            .padding(5.dp)
+            .padding(bottom = 15.dp)
+    ){
+        Card(
+            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.background),
+//            colors = CardDefaults.cardColors(containerColor = Color.Blue),
+            onClick = { onItemClick(item) }
+        ) {
+            Box(Modifier.padding(15.dp)) {
+                Text(text = item.name)
+            }
+            Image(
+                painter = rememberAsyncImagePainter(
+                    item.imageSrc
+                ),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(250.dp),
+                contentDescription = null
+            )
         }
-        Image(
-            painter = rememberAsyncImagePainter(
-                item.imageSrc
-            ),
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(250.dp),
-            contentDescription = null
-        )
     }
 }
 
+@Preview
+@Composable
+fun Watch() {
+    val item = CategoryItem(
+        id = 4,
+        name = "frank ml",
+        imageSrc = ""
+    )
+    Column {
+        Row {
+            CategoryProductList(
+                onItemClick = {},
+                item = item
+            )
+            CategoryProductList(
+                onItemClick = {},
+                item = item
+            )
+        }
+        Row {
+            CategoryProductList(
+                onItemClick = {},
+                item = item
+            )
+            CategoryProductList(
+                onItemClick = {},
+                item = item
+            )
+        }
+    }
+}
