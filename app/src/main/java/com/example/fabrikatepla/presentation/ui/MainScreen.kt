@@ -1,6 +1,13 @@
 package com.example.fabrikatepla.presentation.ui
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.FloatingActionButton
@@ -19,12 +26,21 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.fabrikatepla.R
 import com.example.fabrikatepla.navigation.AppNavGraph
 import com.example.fabrikatepla.navigation.NavBarItem
+import com.example.fabrikatepla.presentation.ui.favorite.FavoriteScreen
 import com.example.fabrikatepla.presentation.ui.home.CategoryItem.CategoryViewModel
 import com.example.fabrikatepla.presentation.ui.home.HomeScreen
 import com.example.fabrikatepla.presentation.ui.home.MainViewModel
@@ -53,29 +69,6 @@ fun MainScreen(
         snackbarHost = {
             SnackbarHost(hostState = snackBarHostState)
         },
-//        floatingActionButton = {
-//            if (fabIsVisible.value) {
-//                FloatingActionButton(
-//                    onClick = {
-//                        scope.launch {
-//                            val snackAction = snackBarHostState.showSnackbar(
-//                                message = "Перейти в корзину",
-//                                actionLabel = "Скрыть окно",
-//                                duration = SnackbarDuration.Long
-//                            )
-//                            if (snackAction == SnackbarResult.ActionPerformed) {
-//                                fabIsVisible.value = false
-//                            }
-//                        }
-//                    }
-//                ) {
-//                    Icon(
-//                        Icons.Filled.ShoppingCart,
-//                        contentDescription = null
-//                    )
-//                }
-//            }
-//        },
         bottomBar = {
             NavigationBar {
                 val navBackStackEntry by navHostController.currentBackStackEntryAsState()
@@ -123,9 +116,10 @@ fun MainScreen(
                     categoryViewModel = categoryViewModel
                 )
             },
-            favoriteContent = { Text(text = "Favorite") },
+            favoriteContent = {
+                FavoriteScreen()
+            },
             profileContent = { Text(text = "Profile") }
         )
     }
-
 }
