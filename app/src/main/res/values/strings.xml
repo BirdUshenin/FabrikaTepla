@@ -3,4 +3,13 @@
     <string name="navigation_item_main">Главная</string>
     <string name="navigation_item_favorite">Избранное</string>
     <string name="navigation_item_profile">Профиль</string>
+
+    <!-- Profile strings -->
+    <string name="profile_avatar">Аватар профиля</string>
+    <string name="profile_menu">Меню</string>
+    <string name="profile_settings">Настройки</string>
+    <string name="profile_card_discount">скидка</string>
+    <string name="profile_card_info">Информация о карте</string>
+    <string name="profile_car_balance">баланс</string>
+    <string name="profile_car_qr_code">QR-КОД</string>
 </resources>

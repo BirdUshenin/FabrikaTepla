@@ -1,18 +1,13 @@
 package com.example.fabrikatepla.presentation.ui
 
 import android.annotation.SuppressLint
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ShoppingCart
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -28,7 +23,7 @@ import com.example.fabrikatepla.navigation.NavBarItem
 import com.example.fabrikatepla.presentation.ui.home.CategoryItem.CategoryViewModel
 import com.example.fabrikatepla.presentation.ui.home.HomeScreen
 import com.example.fabrikatepla.presentation.ui.home.MainViewModel
-import kotlinx.coroutines.launch
+import com.example.fabrikatepla.presentation.ui.profile.ProfileScreen
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
@@ -124,7 +119,12 @@ fun MainScreen(
                 )
             },
             favoriteContent = { Text(text = "Favorite") },
-            profileContent = { Text(text = "Profile") }
+            profileContent = { viewModel ->
+                ProfileScreen(
+                    viewModel = viewModel,
+                    paddingValues = paddingValues,
+                )
+            }
         )
     }
 
