@@ -10,6 +10,6 @@
     <string name="profile_settings">Настройки</string>
     <string name="profile_card_discount">скидка</string>
     <string name="profile_card_info">Информация о карте</string>
-    <string name="profile_car_balance">баланс</string>
-    <string name="profile_car_qr_code">QR-КОД</string>
+    <string name="profile_card_balance">баланс</string>
+    <string name="profile_card_qr_code">QR-КОД</string>
 </resources>

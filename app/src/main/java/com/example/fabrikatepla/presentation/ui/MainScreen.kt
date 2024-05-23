@@ -16,6 +16,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.fabrikatepla.navigation.AppNavGraph
@@ -24,6 +26,7 @@ import com.example.fabrikatepla.presentation.ui.home.CategoryItem.CategoryViewMo
 import com.example.fabrikatepla.presentation.ui.home.HomeScreen
 import com.example.fabrikatepla.presentation.ui.home.MainViewModel
 import com.example.fabrikatepla.presentation.ui.profile.ProfileScreen
+import com.example.fabrikatepla.presentation.ui.profile.ProfileViewModel
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
@@ -31,7 +34,9 @@ fun MainScreen(
     viewModel: MainViewModel,
     categoryViewModel: CategoryViewModel
 ) {
-
+    val viewModelStoreOwner = checkNotNull(LocalViewModelStoreOwner.current) {
+        "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
+    }
     val navHostController = rememberNavController()
 
     val snackBarHostState = remember {
@@ -119,9 +124,10 @@ fun MainScreen(
                 )
             },
             favoriteContent = { Text(text = "Favorite") },
-            profileContent = { viewModel ->
+            profileContent = {
+                val profileViewModel = viewModel<ProfileViewModel>(viewModelStoreOwner)
                 ProfileScreen(
-                    viewModel = viewModel,
+                    viewModel = profileViewModel,
                     paddingValues = paddingValues,
                 )
             }
