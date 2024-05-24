@@ -14,7 +14,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.Card
@@ -33,11 +33,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.fabrikatepla.R
 import com.example.fabrikatepla.common.SizeConstants
@@ -56,17 +58,17 @@ fun UserPlasticCard(
     var showFrontSide by rememberSaveable { mutableStateOf(true) }
 
     val endOfRotation = 180f
-    val rotationDuration = 1000
+    val rotationDuration = 500
 
-    val targetValue = if (!qrCodeIsNotActive) endOfRotation else 0f
+    val targetRotationValue = if (!qrCodeIsNotActive) endOfRotation else 0f
     val rotation by animateFloatAsState(
-        targetValue = targetValue,
+        targetValue = targetRotationValue,
         animationSpec = tween(durationMillis = rotationDuration, easing = LinearEasing),
         label = "rotate user plastic card",
     )
 
     LaunchedEffect(qrCodeIsNotActive) {
-        // Delay is used to change side of the card in the middle of animation
+        // Delay is used to change the content of the card in the middle of animation
         delay(rotationDuration.toLong() / 2)
         showFrontSide = qrCodeIsNotActive
     }
@@ -77,7 +79,9 @@ fun UserPlasticCard(
     }
 
     Card(
-        modifier = modifier
+        modifier = Modifier
+            .clipToBounds()
+            .then(modifier)
             .padding(5.dp)
             .fillMaxWidth()
             .aspectRatio(SizeConstants.ASPECT_RATIO_OF_PLASTIC_CARD)
@@ -149,7 +153,7 @@ fun UserPlasticCardFrontSide(
                 modifier = Modifier
                     .padding(top = 5.dp)
                     .size(25.dp)
-                    .clip(RoundedCornerShape(25.dp))
+                    .clip(CircleShape)
                     .clickable { /* TODO */ }
             )
         }
@@ -203,4 +207,10 @@ fun UserPlasticCardBackSide(
                 .padding(10.dp),
         )
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun UserPlasticCardPreview() {
+    UserPlasticCard(discount = "25%", balance = "150", code = "123456789")
 }

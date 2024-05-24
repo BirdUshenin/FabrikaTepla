@@ -4,6 +4,7 @@ import com.example.fabrikatepla.data.Profile
 
 data class ProfileScreenState(
     val loading: Boolean = true,
-    val profile: Profile,
+    val profile: Profile = Profile.DEFAULT_VALUE,
+    val cabinetMenu: List<CabinetMenuElement> = listOf(),
     val error: Boolean = false,
 )

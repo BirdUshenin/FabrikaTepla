@@ -12,4 +12,8 @@
     <string name="profile_card_info">Информация о карте</string>
     <string name="profile_card_balance">баланс</string>
     <string name="profile_card_qr_code">QR-КОД</string>
+    <string name="profile_my_bonuses">мои бонусы</string>
+    <string name="profile_favorite">избранное</string>
+    <string name="profile_my_cabinet">мой кабинет</string>
+    <string name="profile_my_cabinet_arrow">Открыть</string>
 </resources>
