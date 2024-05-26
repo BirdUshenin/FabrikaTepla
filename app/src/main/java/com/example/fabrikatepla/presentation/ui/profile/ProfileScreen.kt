@@ -27,7 +27,6 @@ import com.example.fabrikatepla.R
 import com.example.fabrikatepla.data.Profile
 import com.example.fabrikatepla.presentation.ui.common.ActionButton
 import com.example.fabrikatepla.presentation.ui.common.Loading
-import com.example.fabrikatepla.presentation.ui.common.Menu
 
 @Composable
 fun ProfileScreen(
@@ -42,6 +41,7 @@ fun ProfileScreen(
         LoadedProfile(
             profile = state.profile,
             cabinetMenu = state.cabinetMenu,
+            supportInfo = state.supportInfo,
             paddingValues = paddingValues,
         )
     }
@@ -51,9 +51,10 @@ fun ProfileScreen(
 private fun LoadedProfile(
     profile: Profile,
     cabinetMenu: List<CabinetMenuElement>,
+    supportInfo: SupportInfo,
     paddingValues: PaddingValues,
 ) {
-    val modifier = Modifier.padding(start = 20.dp, end = 20.dp)
+    val modifier = Modifier.padding(horizontal = 20.dp)
 
     LazyColumn(
         modifier = Modifier.padding(paddingValues)
@@ -62,7 +63,7 @@ private fun LoadedProfile(
             profile.run {
                 Row(modifier = modifier.padding(top = 20.dp)) {
                     AccountHolder(icon, name, surname)
-                    Menu()
+                    Menu(supportInfo = supportInfo, modifier = modifier)
                 }
                 Spacer(modifier = modifier.size(30.dp))
                 UserPlasticCard(discount, balance, code, modifier)
@@ -142,5 +143,6 @@ private fun LoadedProfilePreview() {
         CabinetMenuElement.ClickableElement("мои адреса"),
         CabinetMenuElement.ClickableElement("Россия"),
     )
-    LoadedProfile(profile, cabinetMenu, PaddingValues())
+    val supportInfo = SupportInfo(supportNumber = "8 800 770 70 21", appVersion = "5.01.1")
+    LoadedProfile(profile, cabinetMenu, supportInfo, PaddingValues())
 }

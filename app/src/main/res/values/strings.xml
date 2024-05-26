@@ -16,4 +16,11 @@
     <string name="profile_favorite">избранное</string>
     <string name="profile_my_cabinet">мой кабинет</string>
     <string name="profile_my_cabinet_arrow">Открыть</string>
+
+    <string name="profile_bottom_sheet_ask_question">задать вопрос</string>
+    <string name="profile_bottom_sheet_any_question">есть вопрос?</string>
+    <string name="profile_bottom_sheet_support">служба поддержки</string>
+    <string name="profile_bottom_sheet_support_24_7">служба поддержки 24/7</string>
+    <string name="profile_bottom_sheet_log_out">выйти из профиля</string>
+    <string name="profile_bottom_sheet_app_version">версия приложения %1$s</string>
 </resources>

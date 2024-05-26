@@ -33,13 +33,18 @@ class ProfileViewModel : ViewModel() {
             val cabinetMenuDeferred = viewModelScope.async {
                 getMyCabinetMenu()
             }
+            val supportInfoDeferred = viewModelScope.async {
+                getSupportInfo()
+            }
             val profile = profileDeferred.await()
             val cabinetMenu = cabinetMenuDeferred.await()
+            val supportInfo = supportInfoDeferred.await()
             _state.update {
                 it.copy(
                     loading = false,
                     cabinetMenu = cabinetMenu,
                     profile = profile,
+                    supportInfo = supportInfo,
                 )
             }
         } catch (e: Throwable) {
@@ -67,6 +72,13 @@ class ProfileViewModel : ViewModel() {
                 title = "Россия",
                 image = "https://cdn-0.emojis.wiki/emoji-pics/twitter/russia-twitter.png",
             ),
+        )
+    }
+
+    private suspend fun getSupportInfo(): SupportInfo {
+        return SupportInfo(
+            supportNumber = "8 800 770 70 21",
+            appVersion = "5.01.1",
         )
     }
 

@@ -41,7 +41,7 @@ fun CabinetMenuElement(
                 border = BorderStroke(0.dp, Color.Transparent),
             ) {
                 Row(
-                    modifier = modifier.padding(top = 12.dp, bottom = 12.dp),
+                    modifier = modifier.padding(vertical = 12.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     cabinetMenuElement.image?.let {

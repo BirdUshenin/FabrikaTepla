@@ -44,7 +44,7 @@ fun ActionButton(
             )
             Text(
                 text = buttonText,
-                modifier = Modifier.padding(start = 10.dp, end = 10.dp),
+                modifier = Modifier.padding(horizontal = 10.dp),
                 color = Color.Black,
                 style = MaterialTheme.typography.titleMedium.copy(
                     fontWeight = FontWeight.Bold,
