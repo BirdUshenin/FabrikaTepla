@@ -22,6 +22,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.fabrikatepla.navigation.AppNavGraph
 import com.example.fabrikatepla.navigation.NavBarItem
+import com.example.fabrikatepla.presentation.ui.favorite.FavoriteScreen
 import com.example.fabrikatepla.presentation.ui.home.CategoryItem.CategoryViewModel
 import com.example.fabrikatepla.presentation.ui.home.HomeScreen
 import com.example.fabrikatepla.presentation.ui.home.MainViewModel
@@ -53,29 +54,6 @@ fun MainScreen(
         snackbarHost = {
             SnackbarHost(hostState = snackBarHostState)
         },
-//        floatingActionButton = {
-//            if (fabIsVisible.value) {
-//                FloatingActionButton(
-//                    onClick = {
-//                        scope.launch {
-//                            val snackAction = snackBarHostState.showSnackbar(
-//                                message = "Перейти в корзину",
-//                                actionLabel = "Скрыть окно",
-//                                duration = SnackbarDuration.Long
-//                            )
-//                            if (snackAction == SnackbarResult.ActionPerformed) {
-//                                fabIsVisible.value = false
-//                            }
-//                        }
-//                    }
-//                ) {
-//                    Icon(
-//                        Icons.Filled.ShoppingCart,
-//                        contentDescription = null
-//                    )
-//                }
-//            }
-//        },
         bottomBar = {
             NavigationBar {
                 val navBackStackEntry by navHostController.currentBackStackEntryAsState()
@@ -123,7 +101,9 @@ fun MainScreen(
                     categoryViewModel = categoryViewModel
                 )
             },
-            favoriteContent = { Text(text = "Favorite") },
+            favoriteContent = {
+                FavoriteScreen()
+            },
             profileContent = {
                 val profileViewModel = viewModel<ProfileViewModel>(viewModelStoreOwner)
                 ProfileScreen(
