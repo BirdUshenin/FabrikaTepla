@@ -4,7 +4,6 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -63,7 +62,6 @@ fun BottomSheet(
 ) {
     ModalBottomSheet(
         onDismissRequest = onDismissRequest,
-        modifier = Modifier.fillMaxHeight(0.45f)
     ) {
         Column {
             Spacer(modifier = modifier.height(20.dp))
@@ -133,6 +131,7 @@ fun BottomSheet(
                 modifier = modifier,
                 style = MaterialTheme.typography.bodyMedium.copy(color = Color.Gray)
             )
+            Spacer(modifier = modifier.height(40.dp))
         }
     }
 }
