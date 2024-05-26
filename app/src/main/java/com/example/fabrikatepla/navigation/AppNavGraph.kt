@@ -11,7 +11,7 @@ fun AppNavGraph(
     homeScreenContent: @Composable () -> Unit,
     favoriteContent: @Composable () -> Unit,
     profileContent: @Composable () -> Unit,
-){
+) {
     NavHost(
         navController = navHostController,
         startDestination = Screen.ProductMain.route

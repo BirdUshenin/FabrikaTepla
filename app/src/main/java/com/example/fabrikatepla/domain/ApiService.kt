@@ -2,9 +2,11 @@ package com.example.fabrikatepla.domain
 
 import com.example.fabrikatepla.data.CategoryItem
 import com.example.fabrikatepla.data.Item
+import com.example.fabrikatepla.data.Profile
 import retrofit2.http.GET
 
 interface ApiService {
+
     @GET("/HeatFactoryAPI/products.json")
     suspend fun getItems(): List<Item>
 
@@ -25,4 +27,8 @@ interface ApiService {
 
     @GET("/HeatFactoryAPI/Floors.json")
     suspend fun getFloors(): List<CategoryItem>
+
+    @GET("/HeatFactoryAPI/profile.json")
+    suspend fun getProfiles(): Profile
+
 }

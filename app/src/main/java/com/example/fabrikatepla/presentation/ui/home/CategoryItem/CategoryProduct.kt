@@ -49,6 +49,7 @@ import coil.compose.rememberAsyncImagePainter
 import com.example.fabrikatepla.R
 import com.example.fabrikatepla.data.CategoryItem
 import com.example.fabrikatepla.data.Item
+import com.example.fabrikatepla.presentation.ui.common.Loading
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
@@ -64,12 +65,7 @@ fun CategoryProduct(
     }
 
     if (isLoading) {
-        Box(
-            modifier = Modifier.fillMaxSize(),
-            contentAlignment = Alignment.Center
-        ) {
-            CircularProgressIndicator()
-        }
+        Loading()
     } else {
         Scaffold(
             topBar = {

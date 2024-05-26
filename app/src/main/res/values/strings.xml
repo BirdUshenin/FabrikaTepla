@@ -3,4 +3,24 @@
     <string name="navigation_item_main">Главная</string>
     <string name="navigation_item_favorite">Избранное</string>
     <string name="navigation_item_profile">Профиль</string>
+
+    <!-- Profile strings -->
+    <string name="profile_avatar">Аватар профиля</string>
+    <string name="profile_menu">Меню</string>
+    <string name="profile_settings">Настройки</string>
+    <string name="profile_card_discount">скидка</string>
+    <string name="profile_card_info">Информация о карте</string>
+    <string name="profile_card_balance">баланс</string>
+    <string name="profile_card_qr_code">QR-КОД</string>
+    <string name="profile_my_bonuses">мои бонусы</string>
+    <string name="profile_favorite">избранное</string>
+    <string name="profile_my_cabinet">мой кабинет</string>
+    <string name="profile_my_cabinet_arrow">Открыть</string>
+
+    <string name="profile_bottom_sheet_ask_question">задать вопрос</string>
+    <string name="profile_bottom_sheet_any_question">есть вопрос?</string>
+    <string name="profile_bottom_sheet_support">служба поддержки</string>
+    <string name="profile_bottom_sheet_support_24_7">служба поддержки 24/7</string>
+    <string name="profile_bottom_sheet_log_out">выйти из профиля</string>
+    <string name="profile_bottom_sheet_app_version">версия приложения %1$s</string>
 </resources>

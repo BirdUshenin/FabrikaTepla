@@ -58,6 +58,7 @@ import coil.compose.rememberAsyncImagePainter
 import com.example.fabrikatepla.R
 import com.example.fabrikatepla.data.CategoryItem
 import com.example.fabrikatepla.data.Item
+import com.example.fabrikatepla.presentation.ui.common.Loading
 import com.example.fabrikatepla.presentation.ui.home.CatalogGridRecommendationRender
 import com.example.fabrikatepla.presentation.ui.home.CatalogGridRootSectionsRender
 import com.example.fabrikatepla.presentation.ui.home.HomeScreenState
@@ -94,12 +95,7 @@ fun CategoryScreen(
             }
 
             state.loading -> {
-                Box(
-                    modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center
-                ) {
-                    CircularProgressIndicator()
-                }
+                Loading()
             }
 
             else -> {
