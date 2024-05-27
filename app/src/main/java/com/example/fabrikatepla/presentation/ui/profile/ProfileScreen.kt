@@ -107,14 +107,12 @@ private fun ProfileActionButtons(
             buttonImage = painterResource(id = R.drawable.sync),
             buttonImageBackground = bonusesButtonBackground,
             buttonText = bonusesButtonText,
-            onClick = { bonusesButtonClicked = !bonusesButtonClicked },
-        )
+        ) { bonusesButtonClicked = !bonusesButtonClicked }
         ActionButton(
             buttonImage = painterResource(id = R.drawable.like),
             buttonImageBackground = Color.Black,
             buttonText = stringResource(id = R.string.profile_favorite),
-            onClick = { /* TODO */ },
-        )
+        ) { /* TODO */ }
     }
 }
 

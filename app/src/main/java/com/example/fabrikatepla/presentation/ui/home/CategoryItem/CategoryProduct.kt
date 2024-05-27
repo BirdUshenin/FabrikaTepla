@@ -7,22 +7,21 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.rounded.MoreVert
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -43,12 +42,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import com.example.fabrikatepla.R
 import com.example.fabrikatepla.data.CategoryItem
 import com.example.fabrikatepla.data.Item
+import com.example.fabrikatepla.presentation.ui.common.ActionButton
 import com.example.fabrikatepla.presentation.ui.common.Loading
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
@@ -205,6 +207,31 @@ fun CategoryProductList(
                     .height(250.dp),
                 contentDescription = null
             )
+            Column (
+                modifier = Modifier.fillMaxWidth().padding(5.dp),
+//                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(text = "43 405 ₽", fontSize = 25.sp)
+                Box(modifier = Modifier.padding(top = 10.dp, bottom = 10.dp)){
+//                    ActionButton(
+//                        buttonImage = painterResource(id = R.drawable.like),
+//                        buttonImageBackground = Color(0xFFFA6C37),
+//                        buttonText = stringResource(id = R.string.buy),
+//                    ) { /* TODO */ }
+                    ActionButton(
+                        buttonImage = painterResource(id = R.drawable.like),
+                        buttonImageBackground = Color.Black,
+                        buttonText = stringResource(id = R.string.profile_favorite),
+                    ) { /* TODO */ }
+                }
+                Button(
+                    onClick = { /*TODO*/ },
+                    colors = ButtonDefaults.buttonColors(Color(0xFFFA6C37)),
+                    modifier = Modifier.height(50.dp).width(155.dp)
+                ) {
+                    Text(text = "Купить")
+                }
+            }
         }
     }
 }
@@ -214,7 +241,7 @@ fun CategoryProductList(
 fun Watch() {
     val item = CategoryItem(
         id = 4,
-        name = "frank ml",
+        name = "Радиаторы стальные",
         imageSrc = ""
     )
     Column {
