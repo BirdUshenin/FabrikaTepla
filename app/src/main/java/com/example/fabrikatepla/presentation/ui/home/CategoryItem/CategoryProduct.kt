@@ -209,15 +209,9 @@ fun CategoryProductList(
             )
             Column (
                 modifier = Modifier.fillMaxWidth().padding(5.dp),
-//                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text(text = "43 405 ₽", fontSize = 25.sp)
+                Text(text = item.price, fontSize = 25.sp)
                 Box(modifier = Modifier.padding(top = 10.dp, bottom = 10.dp)){
-//                    ActionButton(
-//                        buttonImage = painterResource(id = R.drawable.like),
-//                        buttonImageBackground = Color(0xFFFA6C37),
-//                        buttonText = stringResource(id = R.string.buy),
-//                    ) { /* TODO */ }
                     ActionButton(
                         buttonImage = painterResource(id = R.drawable.like),
                         buttonImageBackground = Color.Black,
@@ -242,7 +236,8 @@ fun Watch() {
     val item = CategoryItem(
         id = 4,
         name = "Радиаторы стальные",
-        imageSrc = ""
+        imageSrc = "",
+        price = ""
     )
     Column {
         Row {
