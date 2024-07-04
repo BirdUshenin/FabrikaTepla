@@ -16,6 +16,7 @@ interface ApiService {
     @GET("/HeatFactoryAPI/radiators.json")
     suspend fun getRadiators(): List<CategoryItem>
 
+
     @GET("/HeatFactoryAPI/Waterheaters.json")
     suspend fun getWaterHeaters(): List<CategoryItem>
 
